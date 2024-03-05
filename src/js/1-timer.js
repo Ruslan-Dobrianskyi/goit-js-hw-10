@@ -16,7 +16,6 @@ startBtn.addEventListener('click', onStartBtnClick);
 
 let userSelectedDate;
 let timerId = null;
-let futureDate;
 
 const options = {
   enableTime: true,
@@ -27,7 +26,13 @@ const options = {
     const selectedDate = selectedDates[0];
 
     if (selectedDate < Date.now()) {
-      window.alert('Please choose a date in the future');
+      iziToast.error({
+        title: 'Error',
+        message: 'Please choose a date in the future',
+        position: 'topRight',
+        timeout: 3000,
+      });
+
       startBtn.disabled = true;
     } else {
       startBtn.disabled = false;
@@ -42,18 +47,12 @@ function onStartBtnClick() {
   startBtn.disabled = true;
 
   timerId = setInterval(() => {
-    const date = Date.now();
-    const diff = futureDate - date;
+    const diff = userSelectedDate - Date.now();
 
     if (diff <= 0) {
       clearInterval(timerId);
-      render(days, hours, minutes, seconds);
-      iziToast.success({
-        title: 'Congratulations!',
-        message: 'Timer completed',
-        position: 'topRight',
-        timeout: 3000,
-      });
+      startBtn.disabled = false;
+
       return;
     }
 
