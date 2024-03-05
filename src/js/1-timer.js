@@ -13,6 +13,7 @@ const startBtn = document.querySelector('[data-start]');
 const input = document.querySelector('#datetime-picker');
 
 startBtn.addEventListener('click', onStartBtnClick);
+startBtn.disabled = true;
 
 let userSelectedDate;
 let timerId = null;
@@ -32,12 +33,11 @@ const options = {
         position: 'topRight',
         timeout: 3000,
       });
-
       startBtn.disabled = true;
-    } else {
-      startBtn.disabled = false;
-      userSelectedDate = selectedDate;
+      return;
     }
+    startBtn.disabled = false;
+    userSelectedDate = selectedDate;
   },
 };
 
@@ -46,12 +46,14 @@ flatpickr(input, options);
 function onStartBtnClick() {
   startBtn.disabled = true;
 
+  input.disabled = true;
+
   timerId = setInterval(() => {
     const diff = userSelectedDate - Date.now();
 
     if (diff <= 0) {
       clearInterval(timerId);
-      startBtn.disabled = false;
+      input.disabled = false;
 
       return;
     }

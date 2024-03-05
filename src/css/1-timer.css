@@ -61,11 +61,12 @@
   padding: 8px 16px;
   transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-.picker-btn:hover:not(.picker-btn.btn-disabled) {
+
+.picker-btn:hover {
   background: #6c8cff;
 }
 
-.btn-disabled {
+.picker-btn:disabled {
   background: #cfcfcf;
   color: #989898;
 }
